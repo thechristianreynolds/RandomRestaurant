@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Random Restaurant</title>
+  
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.css'>
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+  <nav class="light-blue lighten-3" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Random Restaurant</a>
+    </div>
+  </nav>
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="container center-align">
+      <br><br>
+      <h1 class="header center light-blue-text">Find a random restaurant near you.</h1>
+      <div class="row center">
+      </div>
+      <div class="row center">
+        <a id="foodbtn" class="btn-large waves-effect waves-light light-blue lighten-3">Find Food</a>
+      </div>
+      <form action="#" class="center">
+        <p>
+      <label>
+        <input id="fastFood"type="checkbox" />
+        <span>Only Show Fast Food</span>
+      </label>
+    </p>
+
+      </form>
+
+      
+
+      <br><br>
+
+      <h2 id="message" class="header center orange-text lighten-4">You should go to: </h2>      
+      <img id="restaurantImg" src="" alt="">
+      <h1 id="restaurant" class="header center light-blue-text lighten-4"></h1>
+      <a id="directionsLink" href="" target="_blank"><h2 id="directions" class="header center blue-text"></h2></a>
+    </div>
+  </div>
+
+
+  <div class="container">
+    <div class="section">
+
+
+    </div>
+    <br><br>
+  </div>
+<main class="container"></main>
+  <footer class="page-footer light-blue lighten-3">
+    <div class="container">
+      <div class="row">
+
+
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="orange-text text-lighten-3" href="https://github.com/thechristianreynolds/RandomRestaurant">Christian</a>
+      </div>
+    </div>
+  </footer>
+
+
+
+  <!--  Scripts-->
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSnWro6AugshyeBuillRbBIzrLGrTa0gI&libraries=places"></script>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script  src="js/index.js"></script>
+  <!-- <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+  <script src="js/main.js"></script> -->
+  </body>
+</html>
