@@ -1,9 +1,8 @@
-const key = 'AIzaSyBuTc_usOwrWL6eT2EjsuAhQ40VCVGdXuM';
+const key = 'AIzaSyBniuWYvBmuSJq2_E_JE6ca1cIjLmt8X7s';
 const placeURL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
 const textURL = 'https://maps.googleapis.com/maps/api/place/textsearch/json';
 let fastURL;
 const proxyurl = 'https://cors-anywhere.herokuapp.com/';
-const geoURL = 'https://www.googleapis.com/geolocation/v1/geolocate?key=' + key;
 let searchURL;
 let radius = 16000;
 let type = 'restaurant';
@@ -26,14 +25,8 @@ $(document).ready(function() {
     } else {
       theURL = searchURL;
     }
-    $.get(proxyurl + theURL).then(function(result) {
-      food = result.results[randomIndex(20)];
-      $('#restaurant').text(`${food.name}`);
-      message_element.show();
-      let href = `https://www.google.com/maps/dir/?api=1&origin=${place_coord}&destination=${encodeURI(food.name)}`;
-      $('a#directionsLink').attr('href', href);
-      $('#directions').text('Directions');
-    });
+    findFood();
+    message_element.show();
   });
 });
 
@@ -70,3 +63,17 @@ function getResults(lat, long) {
 function randomIndex(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
+
+function findFood() {
+  $.get(proxyurl + theURL).then(function(result) {
+    let food = result.results[randomIndex(20)];
+    if(food.name == $('#restaurant').text()) {
+      findFood();
+    } else {
+      $('#restaurant').text(`${food.name}`);
+      let href = `https://www.google.com/maps/dir/?api=1&origin=${place_coord}&destination=${encodeURI(food.name)}`;
+      $('a#directionsLink').attr('href', href);
+      $('#directions').text('Directions');
+    }
+  });
+};
