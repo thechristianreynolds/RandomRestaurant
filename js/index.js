@@ -38,9 +38,15 @@ $(document).ready(function() {
 });
 
 function getLocation() {
-  $.post(geoURL).then(function(result) {
-    getResults(result.location.lat, result.location.lng);
-  });
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(getCoordinates);
+  } else {
+    $('#restaurant').text("Geolocation not supported by this browser");
+  }
+};
+
+function getCoordinates(position) {
+  getResults(position.coords.latitude, position.coords.longitude);
 };
 
 function getResults(lat, long) {
