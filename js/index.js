@@ -1,31 +1,29 @@
 const key = 'AIzaSyBniuWYvBmuSJq2_E_JE6ca1cIjLmt8X7s';
 const placeURL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
 const textURL = 'https://maps.googleapis.com/maps/api/place/textsearch/json';
-let fastURL;
 const proxyurl = 'https://cors-anywhere.herokuapp.com/';
-let searchURL;
 let radius = 16000;
 let type = 'restaurant';
-let theURL;
-let place_coord;
-
+let normalURL;
+let fastFoodURL;
+let searchURL;
+let userURLCoordinates;
 
 $(document).ready(function() {
   const message_element = $('#message');
   message_element.hide();
   getLocation();
-  theURL = searchURL;
   $('#fastFood').click(function() {
     $('#fastFood').toggleClass('active');
   });
 
   $('#foodbtn').click(function() {
     if ($('#fastFood').hasClass('active')) {
-      theURL = fastURL;
+      searchURL = fastFoodURL;
     } else {
-      theURL = searchURL;
+      searchURL = normalURL;
     }
-    findFood();
+    pickRestaurant();
     message_element.show();
   });
 });
@@ -39,11 +37,11 @@ function getLocation() {
 };
 
 function getCoordinates(position) {
-  getResults(position.coords.latitude, position.coords.longitude);
+  getRestaurants(position.coords.latitude, position.coords.longitude);
+  userURLCoordinates = `${position.coords.latitude}, ${position.coords.longitude}`
 };
 
-function getResults(lat, long) {
-  place_coord = `${lat},${long}`;
+function getRestaurants(lat, long) {
   const params = [
     `location=${lat},${long}`,
     `radius=${radius}`,
@@ -55,23 +53,22 @@ function getResults(lat, long) {
     `radius=${radius}`,
     `key=${key}`,
   ].join('&');
-  const url = `${placeURL}?${params}`;
-  fastURL = `${textURL}?query=fast+food&${textParams}`;
-  searchURL = url;
+  normalURL = `${placeURL}?${params}`;
+  fastFoodURL = `${textURL}?query=fast+food&${textParams}`;
 }
 
 function randomIndex(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
-function findFood() {
-  $.get(proxyurl + theURL).then(function(result) {
+function pickRestaurant() {
+  $.get(proxyurl + searchURL).then(function(result) {
     let food = result.results[randomIndex(20)];
     if(food.name == $('#restaurant').text()) {
-      findFood();
+      pickRestaurant();
     } else {
       $('#restaurant').text(`${food.name}`);
-      let href = `https://www.google.com/maps/dir/?api=1&origin=${place_coord}&destination=${encodeURI(food.name)}`;
+      let href = `https://www.google.com/maps/dir/?api=1&origin=${userURLCoordinates}&destination=${encodeURI(food.name)}`;
       $('a#directionsLink').attr('href', href);
       $('#directions').text('Directions');
     }
